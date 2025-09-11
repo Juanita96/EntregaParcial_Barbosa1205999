@@ -15,9 +15,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isMoving => Mathf.Abs(moveInput.x) > 0.01f;
 
+    public bool jumpOnGround = false;
+
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    bool isGrounded = false;
+    public bool isGrounded = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded == true)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpOnGround = true;
         }
     }
 
@@ -57,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+            jumpOnGround = false;
         }
     }
 

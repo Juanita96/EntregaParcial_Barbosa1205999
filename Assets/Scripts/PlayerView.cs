@@ -15,5 +15,7 @@ public class PlayerView : MonoBehaviour
     void Update()
     {
         animator.SetBool("isRunning", movement.isMoving);
+        animator.SetBool("isJumpping", movement.jumpOnGround);
+        animator.SetBool("isGrounded", movement.isGrounded);
     }
 }
