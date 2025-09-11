@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] private InputActionReference moveAction;
@@ -13,11 +13,15 @@ public class CharacterController : MonoBehaviour
     public float moveSpeed = 7f;
     public float jumpForce = 7f;
 
+    public bool isMoving => Mathf.Abs(moveInput.x) > 0.01f;
+
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     bool isGrounded = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
 
         moveAction.action.started += HandleMoveInput;
         moveAction.action.performed += HandleMoveInput;
@@ -59,5 +63,14 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+
+        if (moveInput.x > 0.01f)
+        {
+            sr.flipX = false;
+        }
+        else if (moveInput.x < -0.01f)
+        {
+            sr.flipX = true;
+        }
     }
 }
