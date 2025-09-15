@@ -20,6 +20,9 @@ public class PlayerDash : MonoBehaviour
     public bool IsDashing = false;
     void Start()
     {
+        PlayerMovement.gameStarted = true;
+        dashAction.action.Enable();
+
         playerMovement = GetComponent<PlayerMovement>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -57,6 +60,8 @@ public class PlayerDash : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerMovement.gameStarted) return;
+
         Vector2 dirDash;
 
         if (playerMovement.moveInput != Vector2.zero)

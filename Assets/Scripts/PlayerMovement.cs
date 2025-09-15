@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static bool gameStarted = false;
+
     [SerializeField] private InputActionReference moveAction;
     public Vector2 moveInput;
     public Vector2 lastMoveDirection = Vector2.right;
@@ -65,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!gameStarted) return;
+
         if (playerDash != null && playerDash.IsDashing)
             return;
 
