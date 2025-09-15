@@ -1,22 +1,25 @@
+using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputActionReference moveAction;
-    private Vector2 moveInput;
+    public Vector2 moveInput;
+    public Vector2 lastMoveDirection = Vector2.right;
 
     [SerializeField] private InputActionReference jumpAction;
     private bool jumpInput;
 
-    [SerializeField] private InputActionReference dashAction;
-    private bool dashInput;
+
+    [SerializeField] private LayerMask groundLayer;
+
+    RaycastHit2D hitFloor; //Variable de tipo bool que da un resultado de verdadero o falso
+    public float rayDist = 2f;
+    public bool isGrounded = false;
 
     public float moveSpeed = 7f;
     public float jumpForce = 7f;
-    public float dashSpeed = 14f;
-    public float dashDuration = 0.2f;
-    public float dashCooldown = 1f;
 
     public bool isMoving => Mathf.Abs(moveInput.x) > 0.01f;
 
@@ -24,17 +27,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-
-    private float dashTime;
-    private float dashCooldownTime;
-    public bool isDashing = false;
-
-    public bool isGrounded = false;
+    private PlayerDash playerDash;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        playerDash = GetComponent<PlayerDash>();
 
         moveAction.action.started += HandleMoveInput;
         moveAction.action.performed += HandleMoveInput;
@@ -42,13 +41,17 @@ public class PlayerMovement : MonoBehaviour
 
         jumpAction.action.performed += HandleJumpInput;
 
-        dashAction.action.performed += context => TryDash();
     }
 
     void HandleMoveInput(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
         Debug.Log(moveInput);
+
+        if (moveInput != Vector2.zero)
+        {
+            lastMoveDirection = moveInput;
+        }
     }
 
     void HandleJumpInput(InputAction.CallbackContext context)
@@ -58,62 +61,36 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpOnGround = true;
         }
-    }
-
-    void TryDash()
-    {
-        if (!isDashing && Time.time >= dashCooldownTime)
-        {
-            isDashing = true;
-            dashTime = Time.time + dashDuration;
-            dashCooldownTime = Time.time + dashCooldown;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-            jumpOnGround = false;
-        }
-    }
+    } 
 
     void Update()
     {
+        if (playerDash != null && playerDash.IsDashing)
+            return;
+
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
-        if (isDashing)
+        hitFloor = Physics2D.Raycast(transform.position, Vector2.down, rayDist, groundLayer);
+
+        if(hitFloor.collider != null )
         {
-            if (Time.time < dashTime)
-            {
-                rb.linearVelocity = new Vector2(sr.flipX ? -dashSpeed : dashSpeed, rb.linearVelocity.y);
-            }
-            else
-            {
-                isDashing = false;
-            }
+            Debug.DrawRay(transform.position, Vector2.down* rayDist, Color.green);
+            isGrounded = true;
         }
         else
         {
-            rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+            Debug.DrawRay(transform.position, Vector2.down * rayDist, Color.red);
+            isGrounded = false;
+            jumpOnGround = false;
+        }
 
-            if (moveInput.x > 0.01f)
-            {
-                sr.flipX = false;
-            }
-            else if (moveInput.x < -0.01f)
-            {
-                sr.flipX = true;
-            }
+        if (moveInput.x > 0.01f)
+        {
+            sr.flipX = false;
+        }
+        else if (moveInput.x < -0.01f)
+        {
+            sr.flipX = true;
         }
     }
 }

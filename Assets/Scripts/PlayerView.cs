@@ -7,9 +7,11 @@ public class PlayerView : MonoBehaviour
     //private solo permite acceso en este script
     //public peromite que otros scrip usen info de otros scripts
     private PlayerMovement movement;
+    private PlayerDash dash;
     void Start()
     {
         movement = GetComponent<PlayerMovement>();
+        dash = GetComponent<PlayerDash>();
     }
 
     void Update()
@@ -17,6 +19,6 @@ public class PlayerView : MonoBehaviour
         animator.SetBool("isRunning", movement.isMoving);
         animator.SetBool("isJumpping", movement.jumpOnGround);
         animator.SetBool("isGrounded", movement.isGrounded);
-        animator.SetBool("isDashing", movement.isDashing);
+        animator.SetBool("isDashing", dash.IsDashing);
     }
 }

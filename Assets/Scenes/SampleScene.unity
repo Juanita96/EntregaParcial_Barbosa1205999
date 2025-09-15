@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 337629377}
   - component: {fileID: 337629376}
   - component: {fileID: 337629375}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ Transform:
   m_GameObject: {fileID: 337629374}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0071, y: 0.0281, z: 0}
+  m_LocalPosition: {x: -0.334, y: -0.575, z: 0}
   m_LocalScale: {x: 0.9662581, y: 0.16264237, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 430476227}
   - component: {fileID: 430476226}
   - component: {fileID: 430476225}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -623,6 +623,7 @@ GameObject:
   - component: {fileID: 1656256961}
   - component: {fileID: 1656256960}
   - component: {fileID: 1656256963}
+  - component: {fileID: 1656256964}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -716,7 +717,7 @@ Transform:
   m_GameObject: {fileID: 1656256956}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.447, y: -0.516, z: 0}
+  m_LocalPosition: {x: -0.182, y: -0.272, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -735,16 +736,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  moveInput: {x: 0, y: 0}
+  lastMoveDirection: {x: 1, y: 0}
   jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  dashAction: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  rayDist: 0.12
+  isGrounded: 0
   moveSpeed: 2
   jumpForce: 4.17
-  dashSpeed: 14
-  dashDuration: 0.2
-  dashCooldown: 1
   jumpOnGround: 0
-  isDashing: 0
-  isGrounded: 0
 --- !u!61 &1656256961
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -831,6 +833,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1656256957}
+--- !u!114 &1656256964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656256956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b55183501bc9924b96a708bae917079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashAction: {fileID: 2804342022399530181, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  dashDistance: 1
+  dashDuration: 0.5
+  playerMovement: {fileID: 1656256960}
+  dashCooldown: 1
+  IsDashing: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
