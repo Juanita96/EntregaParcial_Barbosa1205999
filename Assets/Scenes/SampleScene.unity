@@ -381,8 +381,8 @@ Transform:
   m_GameObject: {fileID: 430476224}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.99, z: 0}
-  m_LocalScale: {x: 4.0798106, y: 0.6508325, z: 1}
+  m_LocalPosition: {x: 0.0267, y: -0.99, z: 0}
+  m_LocalScale: {x: 4.1732383, y: 0.6508325, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -736,9 +736,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  dashAction: {fileID: 0}
   moveSpeed: 2
   jumpForce: 4.17
+  dashSpeed: 14
+  dashDuration: 0.2
+  dashCooldown: 1
   jumpOnGround: 0
+  isDashing: 0
   isGrounded: 0
 --- !u!61 &1656256961
 BoxCollider2D:

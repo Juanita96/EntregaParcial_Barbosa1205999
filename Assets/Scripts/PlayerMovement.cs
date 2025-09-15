@@ -24,9 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+
     private float dashTime;
     private float dashCooldownTime;
     public bool isDashing = false;
+
     public bool isGrounded = false;
 
     void Start()
@@ -40,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         jumpAction.action.performed += HandleJumpInput;
 
-        dashAction.action.performed += context => dashInput = true;
+        dashAction.action.performed += context => TryDash();
     }
 
     void HandleMoveInput(InputAction.CallbackContext context)
@@ -55,6 +57,16 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpOnGround = true;
+        }
+    }
+
+    void TryDash()
+    {
+        if (!isDashing && Time.time >= dashCooldownTime)
+        {
+            isDashing = true;
+            dashTime = Time.time + dashDuration;
+            dashCooldownTime = Time.time + dashCooldown;
         }
     }
 
@@ -79,20 +91,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
-        if (moveInput.x > 0.01f)
-        {
-            sr.flipX = false;
-        }
-        else if (moveInput.x < -0.01f)
-        {
-            sr.flipX = true;
-        }
-        if (dashInput && !isDashing && Time.time >= dashCooldownTime)
-        {
-            isDashing = true;
-            dashTime = Time.time + dashDuration;
-            dashCooldownTime = Time.time + dashCooldown;
-        }
         if (isDashing)
         {
             if (Time.time < dashTime)
@@ -102,7 +100,19 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 isDashing = false;
-                dashInput = false;
+            }
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+
+            if (moveInput.x > 0.01f)
+            {
+                sr.flipX = false;
+            }
+            else if (moveInput.x < -0.01f)
+            {
+                sr.flipX = true;
             }
         }
     }
