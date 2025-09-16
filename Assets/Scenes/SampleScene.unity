@@ -833,6 +833,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ec8c1d94b90ef47a6431091bad5d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introPanel: {fileID: 950482594}
+  playerMovement: {fileID: 1656256960}
+  playerDash: {fileID: 1656256964}
+  playerView: {fileID: 1656256963}
+  playerAnimator: {fileID: 1656256957}
 --- !u!1 &1300522031
 GameObject:
   m_ObjectHideFlags: 0

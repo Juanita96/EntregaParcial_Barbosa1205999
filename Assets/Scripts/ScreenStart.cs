@@ -1,19 +1,60 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class IntroPanel : MonoBehaviour
+public class ScreenStart : MonoBehaviour
 {
-    void Start()
+    public static ScreenStart Instance;
+
+    [Header("Referencias")]
+    public GameObject introPanel;        // Panel negro con texto
+    public PlayerMovement playerMovement;
+    public PlayerDash playerDash;
+    public PlayerView playerView;        // Opcional si querés controlar animaciones
+    public Animator playerAnimator;      // Animator del personaje (para pausar animaciones)
+
+    private void Awake()
     {
-        // No pausamos el tiempo, solo bloqueamos input
-        PlayerMovement.gameStarted = false;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
-    void Update()
+    private void Start()
     {
-        if (!PlayerMovement.gameStarted && Input.GetKeyDown(KeyCode.Return))
+        // Muestra el panel y pausa todo
+        introPanel.SetActive(true);
+
+        // Bloqueamos inputs de movimiento y dash
+        playerMovement.enabled = false;
+        playerDash.enabled = false;
+
+        // Pausamos físicas y animaciones
+        Time.timeScale = 0f;
+        if (playerAnimator != null)
+            playerAnimator.speed = 0f; // pausa animaciones
+    }
+
+    private void Update()
+    {
+        // Detecta Enter para iniciar el juego
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
         {
-            gameObject.SetActive(false);
-            PlayerMovement.gameStarted = true; 
+            StartGame();
         }
+    }
+
+    private void StartGame()
+    {
+        introPanel.SetActive(false);
+
+        // Desbloqueamos inputs
+        playerMovement.enabled = true;
+        playerDash.enabled = true;
+
+        // Reanudamos físicas y animaciones
+        Time.timeScale = 1f;
+        if (playerAnimator != null)
+            playerAnimator.speed = 1f;
     }
 }
