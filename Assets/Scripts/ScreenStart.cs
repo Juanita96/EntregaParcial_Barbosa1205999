@@ -5,7 +5,7 @@ public class ScreenStart : MonoBehaviour
 {
     public static ScreenStart Instance;
 
-    [Header("Referencias")]
+    [Header("References")]
     public GameObject introPanel;        // Panel negro con texto
     public PlayerMovement playerMovement;
     public PlayerDash playerDash;
