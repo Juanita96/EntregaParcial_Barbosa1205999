@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
+    private Animator animator;
     private bool isNearChest = false;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -10,7 +16,7 @@ public class Chest : MonoBehaviour
         {
             if (PlayerInventory.hasKey)
             {
-                Debug.Log("¡Cofre abierto!");
+                animator.SetBool("isOpen", true);
 
             }
             else
@@ -25,7 +31,6 @@ public class Chest : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isNearChest = true;
-            Debug.Log("Presiona E para abrir el cofre");
         }
     }
 

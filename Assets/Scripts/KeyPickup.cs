@@ -11,7 +11,6 @@ public class PickUpKey : MonoBehaviour
         {
             // "Agarrar" la llave
             Destroy(keyObject); // destruye la llave de la escena
-            Debug.Log("¡Llave recogida!");
 
             // Podés guardar en una variable global o GameManager
             PlayerInventory.hasKey = true;
@@ -24,7 +23,6 @@ public class PickUpKey : MonoBehaviour
         {
             isNearKey = true;
             keyObject = other.gameObject;
-            Debug.Log("Presiona E para agarrar la llave");
         }
     }
 
