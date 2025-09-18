@@ -1,44 +1,49 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Chest : MonoBehaviour
 {
+    [SerializeField] private PlayerInventory playerInventory; // referencia al Player
+    [SerializeField] private InputActionReference OpenChest;   // tecla para abrir el cofre
+
     private Animator animator;
     private bool isNearChest = false;
 
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if (isNearChest && Input.GetKeyDown(KeyCode.E))
-        {
-            if (PlayerInventory.hasKey)
-            {
-                animator.SetBool("isOpen", true);
+        OpenChest.action.performed += HandleOpenChestInput;
+        OpenChest.action.Enable();
+    }
 
-            }
-            else
-            {
-                Debug.Log("Necesitas una llave para abrir este cofre.");
-            }
+    private void OnDisable()
+    {
+        OpenChest.action.performed -= HandleOpenChestInput;
+        OpenChest.action.Disable();
+    }
+
+    private void HandleOpenChestInput(InputAction.CallbackContext context)
+    {
+        if (isNearChest && playerInventory != null && playerInventory.hasKey)
+        {
+            animator.SetBool("chestOpen", true);
+            Debug.Log("Cofre abierto!");
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
             isNearChest = true;
-        }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
             isNearChest = false;
-        }
     }
 }

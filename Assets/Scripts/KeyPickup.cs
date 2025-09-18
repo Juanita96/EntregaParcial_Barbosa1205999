@@ -1,32 +1,48 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PickUpKey : MonoBehaviour
 {
+    [SerializeField] private InputActionReference KeyPickup; // tecla para recoger
+    [SerializeField] private PlayerInventory playerInventory; // referencia al Player
+
     private bool isNearKey = false;
     private GameObject keyObject;
 
-    void Update()
+    private void OnEnable()
     {
-        if (isNearKey && Input.GetKeyDown(KeyCode.E))
-        {
-            // "Agarrar" la llave
-            Destroy(keyObject); // destruye la llave de la escena
-
-            // Podés guardar en una variable global o GameManager
-            PlayerInventory.hasKey = true;
-        }
+        KeyPickup.action.performed += HandleKeyPickupInput;
+        KeyPickup.action.Enable();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnDisable()
+    {
+        KeyPickup.action.performed -= HandleKeyPickupInput;
+        KeyPickup.action.Disable();
+    }
+
+    private void HandleKeyPickupInput(InputAction.CallbackContext context)
+    {
+        if (isNearKey && playerInventory != null)
+        {
+            playerInventory.hasKey = true; // guardamos la llave en el inventario
+            Destroy(keyObject);
+            Debug.Log("Llave recogida!");
+        }
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Key"))
         {
             isNearKey = true;
             keyObject = other.gameObject;
+            Debug.Log("Jugador cerca de la llave");
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Key"))
         {

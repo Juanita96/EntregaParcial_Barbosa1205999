@@ -52,11 +52,11 @@ TagManager:
   - name: Foreground
     uniqueID: 3831239859
     locked: 0
+  - name: Objects
+    uniqueID: 605970277
+    locked: 0
   - name: Player
     uniqueID: 2248369707
-    locked: 0
-  - name: 
-    uniqueID: 2226263583
     locked: 0
   - name: UI
     uniqueID: 3912514197

@@ -1,5 +1,12 @@
-using System;
-public static class PlayerInventory
+using UnityEngine;
+
+public class PlayerInventory : MonoBehaviour
 {
-    public static bool hasKey = false;
+    [Header("Inventario")]
+    public bool hasKey = false;
+
+    private void Start()
+    {
+        Debug.Log("PlayerInventory hasKey: " + hasKey);
+    }
 }
