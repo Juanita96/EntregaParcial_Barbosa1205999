@@ -1,39 +1,39 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // si querés interacción con botón
 
 public class Chest : MonoBehaviour
 {
-    private bool playerNear = false;
-    private PlayerInventory playerInv;
-
-    public Animator animator; // opcional, si tenés animación de abrir cofre
+    private bool isNearChest = false;
 
     void Update()
     {
-        if (playerNear && Keyboard.current.eKey.wasPressedThisFrame)
+        if (isNearChest && Input.GetKeyDown(KeyCode.E))
         {
-            if (playerInv != null && playerInv.hasKey)
+            if (PlayerInventory.hasKey)
             {
-                if (animator != null) animator.SetTrigger("Open");
+                Debug.Log("¡Cofre abierto!");
+
+            }
+            else
+            {
+                Debug.Log("Necesitas una llave para abrir este cofre.");
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            playerNear = true;
-            playerInv = other.GetComponent<PlayerInventory>();
+            isNearChest = true;
+            Debug.Log("Presiona E para abrir el cofre");
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            playerNear = false;
-            playerInv = null;
+            isNearChest = false;
         }
     }
 }

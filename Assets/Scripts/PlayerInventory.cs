@@ -1,11 +1,5 @@
-using UnityEngine;
-
-public class PlayerInventory : MonoBehaviour
+using System;
+public static class PlayerInventory
 {
-    public bool hasKey = false;
-
-    public void PickupKey()
-    {
-        hasKey = true;
-    }
+    public static bool hasKey = false;
 }

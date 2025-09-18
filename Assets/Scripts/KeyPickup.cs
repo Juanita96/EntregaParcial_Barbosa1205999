@@ -1,36 +1,39 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // si usás el nuevo Input System
 
-public class KeyPickup : MonoBehaviour
+public class PickUpKey : MonoBehaviour
 {
-    private bool playerNear = false;
-    private PlayerInventory playerInv;
+    private bool isNearKey = false;
+    private GameObject keyObject;
 
     void Update()
     {
-        // Si el jugador está cerca y presiona E, recoge la llave
-        if (playerNear && Keyboard.current.eKey.wasPressedThisFrame)
+        if (isNearKey && Input.GetKeyDown(KeyCode.E))
         {
-            playerInv.PickupKey();
-            Destroy(gameObject); // la llave desaparece
+            // "Agarrar" la llave
+            Destroy(keyObject); // destruye la llave de la escena
+            Debug.Log("¡Llave recogida!");
+
+            // Podés guardar en una variable global o GameManager
+            PlayerInventory.hasKey = true;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Key"))
         {
-            playerNear = true;
-            playerInv = other.GetComponent<PlayerInventory>();
+            isNearKey = true;
+            keyObject = other.gameObject;
+            Debug.Log("Presiona E para agarrar la llave");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Key"))
         {
-            playerNear = false;
-            playerInv = null;
+            isNearKey = false;
+            keyObject = null;
         }
     }
 }
