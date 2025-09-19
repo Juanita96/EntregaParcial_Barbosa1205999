@@ -9840,6 +9840,57 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &887595167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5209338450776459606, guid: 82024b977cf6e7247a092c674d9cf47e, type: 3}
+  m_PrefabInstance: {fileID: 8493507033515372727}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &887595172
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887595167}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &989901121
 GameObject:
   m_ObjectHideFlags: 0
@@ -13402,9 +13453,10 @@ GameObject:
   - component: {fileID: 1656256963}
   - component: {fileID: 1656256964}
   - component: {fileID: 1656256967}
+  - component: {fileID: 1656256968}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Ground
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13642,6 +13694,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f29b80b52b0d9049a5219d60b721167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyPickup: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  playerInventory: {fileID: 1656256968}
+--- !u!114 &1656256968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656256956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af22c6249ff5134abe053573669bee4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasKey: 0
 --- !u!1 &1695463963
 GameObject:
   m_ObjectHideFlags: 0
@@ -13820,10 +13887,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChestOpen_0
       objectReference: {fileID: 0}
+    - target: {fileID: 7980886169929279237, guid: 82024b977cf6e7247a092c674d9cf47e, type: 3}
+      propertyPath: OpenChest
+      value: 
+      objectReference: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    - target: {fileID: 7980886169929279237, guid: 82024b977cf6e7247a092c674d9cf47e, type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1656256968}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5209338450776459606, guid: 82024b977cf6e7247a092c674d9cf47e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 887595172}
   m_SourcePrefab: {fileID: 100100000, guid: 82024b977cf6e7247a092c674d9cf47e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

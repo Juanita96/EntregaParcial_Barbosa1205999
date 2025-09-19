@@ -12,12 +12,29 @@ public class ScreenStart : MonoBehaviour
     public PlayerView playerView;        // Opcional si querés controlar animaciones
     public Animator playerAnimator;      // Animator del personaje (para pausar animaciones)
 
+    [Header("Input System")]
+    [SerializeField] private InputActionReference startAction; // Acción para comenzar el juego (ej: Enter)
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        // Nos suscribimos al evento de InputAction
+        if (startAction != null)
+            startAction.action.performed += OnStartPressed;
+    }
+
+    private void OnDisable()
+    {
+        // Nos desuscribimos para evitar errores
+        if (startAction != null)
+            startAction.action.performed -= OnStartPressed;
     }
 
     private void Start()
@@ -35,13 +52,9 @@ public class ScreenStart : MonoBehaviour
             playerAnimator.speed = 0f; // pausa animaciones
     }
 
-    private void Update()
+    private void OnStartPressed(InputAction.CallbackContext context)
     {
-        // Detecta Enter para iniciar el juego
-        if (Keyboard.current.enterKey.wasPressedThisFrame)
-        {
-            StartGame();
-        }
+        StartGame();
     }
 
     private void StartGame()
@@ -56,5 +69,9 @@ public class ScreenStart : MonoBehaviour
         Time.timeScale = 1f;
         if (playerAnimator != null)
             playerAnimator.speed = 1f;
+
+        // Importante: desactivar el action después de usarlo
+        if (startAction != null)
+            startAction.action.Disable();
     }
 }
