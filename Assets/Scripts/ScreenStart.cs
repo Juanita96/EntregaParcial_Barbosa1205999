@@ -6,16 +6,16 @@ public class ScreenStart : MonoBehaviour
     public static ScreenStart Instance;
 
     [Header("References")]
-    public GameObject introPanel;        // Panel negro con texto
-    public PlayerMovement playerMovement;
-    public PlayerDash playerDash;
-    public PlayerView playerView;        // Opcional si querés controlar animaciones
-    public Animator playerAnimator;      // Animator del personaje (para pausar animaciones)
+    public GameObject introPanel;          // Black panel at the start
+    public PlayerMovement playerMovement;  // Control player movement
+    public PlayerDash playerDash;          // Control dashing
+    public PlayerView playerView;          // Control animations
+    public Animator playerAnimator;        // Control animations
 
     [Header("Input System")]
-    [SerializeField] private InputActionReference startAction; // Acción para comenzar el juego (ej: Enter)
+    [SerializeField] private InputActionReference startAction; // Enter to start the game
 
-    private void Awake()
+    private void Awake() 
     {
         if (Instance == null)
             Instance = this;
@@ -23,35 +23,33 @@ public class ScreenStart : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnEnable()
+    private void OnEnable() // Secure input suscription
     {
-        // Nos suscribimos al evento de InputAction
         if (startAction != null)
             startAction.action.performed += OnStartPressed;
     }
 
-    private void OnDisable()
+    private void OnDisable() // Secure input desuscription
     {
-        // Nos desuscribimos para evitar errores
         if (startAction != null)
             startAction.action.performed -= OnStartPressed;
     }
 
-    private void Start()
+    private void Start() // Settings to start the game
     {
-        // Muestra el panel y pausa todo
-        introPanel.SetActive(true);
+        introPanel.SetActive(true);  // all panels off at start
 
-        // Bloqueamos inputs de movimiento y dash
+        // Blocked inputs
         playerMovement.enabled = false;
         playerDash.enabled = false;
 
-        // Pausamos físicas y animaciones
+        //  Animations and physics paused
         Time.timeScale = 0f;
         if (playerAnimator != null)
-            playerAnimator.speed = 0f; // pausa animaciones
+            playerAnimator.speed = 0f;
     }
 
+    // Input action to start the game
     private void OnStartPressed(InputAction.CallbackContext context)
     {
         StartGame();
@@ -61,16 +59,16 @@ public class ScreenStart : MonoBehaviour
     {
         introPanel.SetActive(false);
 
-        // Desbloqueamos inputs
+        // inputs unblocked
         playerMovement.enabled = true;
         playerDash.enabled = true;
 
-        // Reanudamos físicas y animaciones
+        //  Animations and physics resumed
         Time.timeScale = 1f;
         if (playerAnimator != null)
             playerAnimator.speed = 1f;
 
-        // Importante: desactivar el action después de usarlo
+        // disable the start action
         if (startAction != null)
             startAction.action.Disable();
     }
