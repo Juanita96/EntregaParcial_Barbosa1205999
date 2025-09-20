@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [Header("Inventario")]
-    public bool hasKey = false;
+    [Header("Inventory")]
+    public bool hasKey = false; //Bool to ask if player has key
 
     private void Start()
     {
-        Debug.Log("PlayerInventory hasKey: " + hasKey);
+
     }
 }

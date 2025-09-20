@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PickUpKey : MonoBehaviour
 {
-    [SerializeField] private InputActionReference KeyPickup; // tecla para recoger
-    [SerializeField] private PlayerInventory playerInventory; // referencia al Player
+    [SerializeField] private InputActionReference KeyPickup; // Input pick up key
+    [SerializeField] private PlayerInventory playerInventory; // Player inventory reference
 
     private bool isNearKey = false;
     private GameObject keyObject;
@@ -21,27 +21,28 @@ public class PickUpKey : MonoBehaviour
         KeyPickup.action.Disable();
     }
 
+    //Input pick up key
     private void HandleKeyPickupInput(InputAction.CallbackContext context)
     {
         if (isNearKey && playerInventory != null)
         {
-            playerInventory.hasKey = true; // guardamos la llave en el inventario
+            playerInventory.hasKey = true; // Key added to inventory
             Destroy(keyObject);
-            Debug.Log("Llave recogida!");
         }
         
     }
 
+    //Player enters key area
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Key"))
         {
             isNearKey = true;
             keyObject = other.gameObject;
-            Debug.Log("Jugador cerca de la llave");
         }
     }
 
+    //Player exits key area
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Key"))

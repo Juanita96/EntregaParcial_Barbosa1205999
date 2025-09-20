@@ -16,14 +16,15 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
 
-    RaycastHit2D hitFloor; //Variable de tipo bool que da un resultado de verdadero o falso
+    RaycastHit2D hitFloor; // Raycast to detect ground
     public float rayDist = 2f;
     public bool isGrounded = false;
 
+    // Movement parameters
     public float moveSpeed = 7f;
     public float jumpForce = 7f;
 
-    public bool isMoving => Mathf.Abs(moveInput.x) > 0.01f;
+    public bool isMoving => Mathf.Abs(moveInput.x) > 0.01f; // Check if the player is moving
 
     public bool jumpOnGround = false;
 
@@ -66,16 +67,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!gameStarted) return;
+        if (!gameStarted) return; 
 
         if (playerDash != null && playerDash.IsDashing)
             return;
 
+        // Horizontal movement
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
+        // Ground check
         hitFloor = Physics2D.Raycast(transform.position, Vector2.down, rayDist, groundLayer);
 
-        if(hitFloor.collider != null )
+        if (hitFloor.collider != null )
         {
             Debug.DrawRay(transform.position, Vector2.down* rayDist, Color.green);
             isGrounded = true;
@@ -87,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
             jumpOnGround = false;
         }
 
+        // Flip sprite based on movement direction
         if (moveInput.x > 0.01f)
         {
             sr.flipX = false;

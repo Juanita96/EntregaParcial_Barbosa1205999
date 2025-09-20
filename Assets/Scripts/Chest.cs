@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class Chest : MonoBehaviour
 {
-    [SerializeField] private PlayerInventory playerInventory; // referencia al Player
-    [SerializeField] private InputActionReference OpenChest;   // tecla para abrir el cofre
+    [SerializeField] private PlayerInventory playerInventory; // Player reference to check if has the key
+    [SerializeField] private InputActionReference OpenChest;   // Input for opening the chest
 
     private Animator animator;
     private bool isNearChest = false;
@@ -25,15 +25,16 @@ public class Chest : MonoBehaviour
         OpenChest.action.performed -= HandleOpenChestInput;
         OpenChest.action.Disable();
     }
-
+    
+    //Input open chest
     private void HandleOpenChestInput(InputAction.CallbackContext context)
     {
         if (isNearChest && playerInventory != null && playerInventory.hasKey)
         {
             animator.SetBool("chestOpen", true);
-            Debug.Log("Cofre abierto!");
         }
     }
+    // Detect player enter the chest area
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -41,6 +42,7 @@ public class Chest : MonoBehaviour
             isNearChest = true;
     }
 
+    // Detect  player exits the chest area
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

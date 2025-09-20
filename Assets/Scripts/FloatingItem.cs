@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class FloatingItem : MonoBehaviour
 {
-    public float amplitude = 0.2f;   // altura del movimiento
-    public float frequency = 2f;     // velocidad de la oscilación
+    public float amplitude = 0.2f;   // Height
+    public float frequency = 2f;     // Velocity
 
     private Vector3 startPos;
 
     void Start()
     {
-        startPos = transform.position; // guardamos la posición inicial
+        startPos = transform.position; // Save initial position
     }
 
     void Update()
     {
-        // Movimiento senoidal en Y
+        // Movement on Y
         float newY = startPos.y + Mathf.Sin(Time.time * frequency) * amplitude;
         transform.position = new Vector3(startPos.x, newY, startPos.z);
     }

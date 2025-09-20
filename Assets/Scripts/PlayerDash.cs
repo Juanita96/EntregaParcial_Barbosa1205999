@@ -4,20 +4,21 @@ using UnityEngine.InputSystem;
 public class PlayerDash : MonoBehaviour
 {
     [SerializeField] private InputActionReference dashAction;
-
-    [SerializeField] private float dashDistance = 0.6f;
-    [SerializeField] private float dashDuration = 0.2f;
-
     [SerializeField] private PlayerMovement playerMovement;
 
+    // Dash parameters
+    [SerializeField] private float dashDistance = 0.6f;
+    [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float dashCooldown = 1f;
+   
     private float nextDashTime = 0f;
 
-    private Vector2 dashDirection;
+    private Vector2 dashDirection; 
 
-    private Rigidbody2D rb;
+    private Rigidbody2D rb; 
 
-    public bool IsDashing = false;
+    public bool IsDashing = false; // Bool to check if the player is dashing
+
     void Start()
     {
         PlayerMovement.gameStarted = true;
@@ -43,16 +44,19 @@ public class PlayerDash : MonoBehaviour
     {
         IsDashing = true;
 
+        // Disable player movement during dash
         if (playerMovement != null)
             playerMovement.enabled = false;
 
+        // Calculate dash velocity
         Vector2 startVelocity = rb.linearVelocity;
         rb.linearVelocity = dashDirection.normalized * (dashDistance / dashDuration);
 
         yield return new WaitForSeconds(dashDuration);
 
-        rb.linearVelocity = startVelocity;
-        
+        rb.linearVelocity = startVelocity; // Restore original velocity
+
+        // Reenable player movement after dash
         if (playerMovement != null)
             playerMovement.enabled = true;
         IsDashing = false;
@@ -64,6 +68,7 @@ public class PlayerDash : MonoBehaviour
 
         Vector2 dirDash;
 
+        // Determine dash direction based on last movement input
         if (playerMovement.moveInput != Vector2.zero)
         {
             dirDash = playerMovement.moveInput;

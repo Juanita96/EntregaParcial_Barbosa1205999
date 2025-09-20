@@ -3,13 +3,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerReset : MonoBehaviour
 {
-    [SerializeField] private InputActionReference resetAction; // Acci�n asociada a la tecla R
+    [SerializeField] private InputActionReference resetAction;
 
     private Vector3 startPosition;
 
     private void Awake()
     {
-        // Guardamos la posici�n inicial al inicio del juego
+        // save player position at start 
         startPosition = transform.position;
     }
 
@@ -27,10 +27,10 @@ public class PlayerReset : MonoBehaviour
 
     private void OnResetPerformed(InputAction.CallbackContext context)
     {
-        // Reiniciamos la posici�n del jugador
+        // player position reset
         transform.position = startPosition;
 
-        // Si tu personaje usa Rigidbody2D o Rigidbody, conviene resetear la velocidad tambi�n
+        // player velocity reset
         if (TryGetComponent<Rigidbody2D>(out var rb2d))
         {
             rb2d.linearVelocity = Vector2.zero;
