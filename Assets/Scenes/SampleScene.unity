@@ -418,7 +418,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9204,7 +9204,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 9
-      m_TileSpriteIndex: 9
+      m_TileSpriteIndex: 19
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -31427,8 +31427,8 @@ Tilemap:
     m_Data: {fileID: -837625701, guid: 3a135a004bd04c64596ffc573c981573, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 1370424522, guid: 3a135a004bd04c64596ffc573c981573, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: -1736111845, guid: 3a135a004bd04c64596ffc573c981573, type: 3}
   - m_RefCount: 5
@@ -31447,8 +31447,8 @@ Tilemap:
     m_Data: {fileID: 1823287815, guid: 3a135a004bd04c64596ffc573c981573, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1370424522, guid: 3a135a004bd04c64596ffc573c981573, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 2009619426, guid: 3a135a004bd04c64596ffc573c981573, type: 3}
   - m_RefCount: 1
@@ -31741,7 +31741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.10544777, y: -0.062335968}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 440.63, y: 57.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1318249507
@@ -36181,7 +36181,7 @@ Transform:
   m_GameObject: {fileID: 1550079260}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -395.22604, y: 165.42003, z: -16200}
+  m_LocalPosition: {x: 0, y: 0, z: -12431}
   m_LocalScale: {x: 3613.9626, y: 1874.048, z: 180}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36468,9 +36468,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashAction: {fileID: 2804342022399530181, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  playerMovement: {fileID: 1656256960}
   dashDistance: 4
   dashDuration: 0.5
-  playerMovement: {fileID: 1656256960}
   dashCooldown: 1
   IsDashing: 0
 --- !u!61 &1656256966
